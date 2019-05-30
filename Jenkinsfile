@@ -4,17 +4,15 @@ node("docker") {
     def image
     stage('build') {
         echo "Starting Build"
-        image = docker.build("stephanzbti/elixir-basic-api")
+        docker build -t stephanzbti/elixir-basic-api:latest .
         echo "Finishing Build"
     }
     stage('RepositoryImage') {
         echo "Starting Login Repository"
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            echo "Starting Push Image"
-            image.push("${env.BUILD_NUMBER}")
-            image.push("latest")
-            echo "Finishing Push Image"
-        }
+        docker login -u ${docker_login} -p ${docker_password}
+        docker push stephanzbti/elixir-basic-api:latest
+        docker tag stephanzbti/elixir-basic-api:latest stephanzbti/elixir-basic-api:${env.BUILD_NUMBER}
+        docker push stephanzbti/elixir-basic-api:${env.BUILD_NUMBER}
         echo "Finishing Login Repository"
     }
 }
