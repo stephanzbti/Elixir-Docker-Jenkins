@@ -15,23 +15,23 @@ Abaixo descrevo os Endpoints que estão presentes nesta aplicação.
 
 Request:
 
-| PATH        | METHOD |
-| ----------- | ------ |
-| /api/health | GET
+| PATH        | METHOD      |
+| ----------- | ----------- |
+| /api/health | GET         |
 
 Response:
 
-| CODE | BODY |
-| ---- | ---- |
-| 200  | `""`   |
+| CODE | BODY               |
+| ---- | ------------------ |
+| 200  | `""`               |
 
 2. Hello
 
 Request:
 
-| PATH       | METHOD |
-| ---------- | ------ |
-| /api/hello | GET
+| PATH       | METHOD       |
+| ---------- | ------------ |
+| /api/hello | GET          |
 
 Response:
 
@@ -43,9 +43,9 @@ Response:
 
 Request:
 
-| PATH       | METHOD |
-| ---------- | ------ |
-| /api/world | GET
+| PATH       | METHOD       |
+| ---------- | ------------ |
+| /api/world | GET          |
 
 Response:
 
@@ -82,6 +82,10 @@ Instalação do Docker:
 ## Jenkins
 
 O Jenkins foi selecionado para a geração da imagem na Integração Contínua pela praticidade de se utilizar essa ferramenta com outras ferramentas, como por exemplo o Git, Docker, Kubernets. Com essa ferramenta podemos gerar Builds automatizadas, o que faz com que todo o ambiente de desenvolvimento e produção, flua de uma forma mais rápida, segura e de difícil falhas, sendo possível descrever Pipelines novas para cada aplicação que se deseja automatizar a Build, dessa forma padronizando todo o processo e ganhando em velocidade de entregas para o Cliente e para os desenvolvedores.
+
+Optamos por armazenar nossas imagens geradas em um repositório do DockerHub, por questão de praticidade que temos utilizando este repositório publico. Assim o Kubernets pode subir fácilmente uma imagem proveniente da Build automatizada.
+
+No Jenkins podemos optar por gerar um nuvem automática, proveniente da AWS EC2, dessa forma podemos gerar varias Builds simultâneas sem termos problema com recursos. Única problema de trabalharmos dessa forma é que poderemos perder o controle de quantas Builds estamos gerando, o que pode ocasionar em um custo muito elevado de recursos. Recomendo que faça alguns controles pelo próprios Jenkins para evitar esse tipo de situação.
 
 Recomendo que você utilize uma imagem docker do Jenkins para facilitar a configuração do seu ambiente! Obs: Um Jenkins bem configurado, mesmo que o Container morra no processo, você não perde as configurações já realizadas, para isso no site do DockerHub do Jenkins eles demonstram como é feita essa configuração. Docker Hub Jenkins:
 
