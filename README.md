@@ -1,9 +1,13 @@
-# sre-challenge
+# Elixir-Docker-Jenkins
 
 
 ## A aplicação
 
-É uma aplicação escrita em [Elixir](https://elixir-lang.org/) que possui apenas 3 endpoints:
+Está aplicação é uma aplicação em Elixir, criada para a demonstração da utilização de Integração Contínua com Jenkins e Docker. Com ela você pode analisar e verificar como é feito uma integração contínua utilizando Docker, o Build sendo gerado apartir do Jenkins e o Deploy da aplicação sendo feito via MiniKube.
+
+Nosso objetivo não é demonstrar como a aplicação funciona internamente, sendo apenas com o objetivo de demonstrar como o Build é feito com a aplicação.
+
+Abaixo descrevo os Endpoints que estão presentes nesta aplicação.
 
 ### API REST
 
@@ -57,67 +61,40 @@ A aplicação também possui uma tarefa que pode ser invocada ao executar o coma
 $ mix talk
 ```
 
-ps: Essa documentação possui uma parte que ensina todos os passos para instalação e configuração dessa aplicação.
+## GitHub
 
+O GitHub foi selecionado para ser o nosso gerenciador de versão, pois é uma das ferramentas mais completas do mercado hoje em dia, tendo uma vasta gama de utilizadores, sendo apoiado por uma das maiores empresas de tecnologia atuais, a Microsoft. 
 
-## Desafio
+Com todo o tempo de vida do GitHub, ele pode ser muito bem trabalhado, desenvolvido e criado formas de se gerenciar suas versões da aplicação de forma mais prática e fácil, dessa forma facilitando quando se precisa dar um RollBack, ou até mesmo verificar certos tipos de modificações feitas apartir com o tempo.
 
-O candidato deve colocar essa aplicação disponível online, preferencialmente utilizando ferramentas de integração contínua.
-Você deve fazer um _fork_ desse repositório, fazer as alterações necessárias e enviar o link desse novo repositório.
-Pedimos que documente todas as decisões feitas, detalhando as tecnologias, ferramentas e arquitetura escolhida.
-Coloque também na documentação o link para a aplicação online.
+Com uma boa gestão de versionamento, pode fazer com que toda a equipe saia ganhando, e agilizando o processo de desenvolvimento até o momento do Deployment.
 
-### Extra
+## Docker
 
-Existe um job/tarefa implementado nessa aplicação como descrito acima. Crie uma solução para executar essa tarefa a cada 30 minutos, documente suas decisões.
+O Docker foi selecionado para a geração de Build na Integração Contínua pela praticidade e facilidade que ele nos apresentar, ao ser fácilmente passado de uma Máquina para outra, sendo necessário apenas o pull da imagem para que você possa inicializar a aplicação.
 
+Com o Docker você tem uma fácilidade de inicializar uma nova instância da aplicação(Escalabilidade), fácil criação de ambiente de desenvolvimento/produção padronizados, padronização na forma em que os programadores trabalham e por ser suportado e desenvolvido pela comunidade, sendo uma aplicação Open Source de grande aceitação pelas empresas.
 
-## Instalação
+Instalação do Docker:
 
-### Elixir
+[Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
-Siga as instruções no [link](https://elixir-lang.org/install.html) para instalação da linguagem [Elixir](https://elixir-lang.org/)
+## Jenkins
 
-ps: utilizamos a versão `1.8`
+O Jenkins foi selecionado para a geração da imagem na Integração Contínua pela praticidade de se utilizar essa ferramenta com outras ferramentas, como por exemplo o Git, Docker, Kubernets. Com essa ferramenta podemos gerar Builds automatizadas, o que faz com que todo o ambiente de desenvolvimento e produção, flua de uma forma mais rápida, segura e de difícil falhas, sendo possível descrever Pipelines novas para cada aplicação que se deseja automatizar a Build, dessa forma padronizando todo o processo e ganhando em velocidade de entregas para o Cliente e para os desenvolvedores.
 
-### Phoenix
+Recomendo que você utilize uma imagem docker do Jenkins para facilitar a configuração do seu ambiente! Obs: Um Jenkins bem configurado, mesmo que o Container morra no processo, você não perde as configurações já realizadas, para isso no site do DockerHub do Jenkins eles demonstram como é feita essa configuração. Docker Hub Jenkins:
 
-[Phoenix](https://phoenixframework.org/) é um framework web para Elixir, para instalação siga as instruções nesse [link](https://hexdocs.pm/phoenix/installation.html)
+[Jenkins DockerHub](https://hub.docker.com/_/jenkins/)
 
-ps: utilizamos a versão `1.4.3`
+Instalação do Jenkins:
 
+[Jenkins](https://jenkins.io/doc/book/installing/)
 
-## Execução
+## Kubernets (MiniKube)
 
-Após a instalação utilize o comando:
+O Kubernets foi selecionado como ferramenta de Deployment para esta aplicação, pois é o mais usado hoje na comunidade, pela praticidade que temos ao se utilizar essa ferramenta, pela quantidade de Plugins e formas diferentes de se trabalhar com ele, por ser uma ferramentas OpenSource e apoiada por toda comunidade, sendo inicialmente criada pela Google em cima de seu sistema Borg.
 
-1. `mix local.hex --force`
-2. `mix local.rebar --force`
-3. `mix deps.get` para fazer o download de todas as dependências
-4. `mix phx.server` para executar a aplicação em modo de `desenvolvimento`
+Nesta aplicação optamos por utilizar o MiniKube, por se tratar de uma demonstração e não de fato uma aplicação em produção. Para se utilizar em uma aplicação em produção, recomendo que você utilize o Kubernets de forma completa, sendo preferêncialmente instalado pelo KubeAdm, dessa forma já configurando seu Kubernets com algumas pendências já resolvidas. Recomendo que leia o site do Kubernets para maiores informações:
 
-A aplicação ficará disponível localmente na porta `4000`.
-Execute o comando `curl http://127.0.0.1:4000` e obterá uma resposta da aplicação
-
-Para executar a aplicação em modo de `produção` primeiramente faça a cópia do arquivo `prod.secret.exs.example` para `prod.secret.exs`:
-
-```bash
-$ cp config/prod.secret.exs.example config/prod.secret.exs
-```
-
-Agora basta configurar a variável de ambiente `MIX_ENV` com o valor `prod` e executar o mesmo comando para iniciar a aplicação `mix phx.server`:
-
-```bash
-$ MIX_ENV=prod mix phx.server
-```
-
-Dessa forma a aplicação responderá localmente na porta `4000` como anteriormente.
-
-
-## Testes unitários
-
-Para executar os testes presentes na aplicação basta aplicar o comando:
-
-```bash
-$ MIX_ENV=test mix test
-```
+[Kubernets](https://kubernetes.io/pt/)
