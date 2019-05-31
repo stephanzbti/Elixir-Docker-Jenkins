@@ -18,7 +18,7 @@ node("docker") {
     stage('Deployment'){
         echo "Staging Kubernetes Deployment"
         sh 'cp -R ./.kube/ ~/.kube/'
-        sh 'kubectl run ${name_project} --image ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} --port ${PORT} -e "MIX_ENV=${MIX_ENV}" "PORT=${PORT}"'
+        sh 'kubectl run ${name_project} --image ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} --port ${PORT} ---env="MIX_ENV=${MIX_ENV}" --env="PORT=${PORT}"'
         echo "Finishing Kubernetes Deployment"
     }
     stage('Clean') {
