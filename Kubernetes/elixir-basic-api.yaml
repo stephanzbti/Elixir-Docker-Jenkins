@@ -17,5 +17,10 @@ spec:
       - image: stephanzbti/elixir-basic-api:latest-development
         imagePullPolicy: Always
         name: elixir-basic-api
+        env:
+          - name: PORT
+            value: 80
+          - name: MIX_ENV
+            value: prod
         ports:
-            - containerPort: 8080
+            - containerPort: 80
