@@ -130,7 +130,12 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo usermod -aG docker $USER
 sudo apt-get install -y openjdk-8-jdk
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
 ```
+
+Para fazermos o Deployment de nossa aplicação, utilizamos o MiniKube, e para isso criamos em nosso repositório uma pasta chamada .kube, pelo qual é reponsável por armazenar as informações de autenticação do Host Kubernetes. Com a autenticação é possível fazer deployments automáticos direto no MiniKube.
 
 Recomendo que você utilize uma imagem docker do Jenkins para facilitar a configuração do seu ambiente! Obs: Um Jenkins bem configurado, mesmo que o Container morra no processo, você não perde as configurações já realizadas, para isso no site do DockerHub do Jenkins eles demonstram como é feita essa configuração. Docker Hub Jenkins:
 
@@ -139,6 +144,13 @@ Recomendo que você utilize uma imagem docker do Jenkins para facilitar a config
 Se caso preferir, pode instalar o Jenkins diretamente no EC2:
 
 [Jenkins](https://jenkins.io/doc/book/installing/)
+
+### Firewall
+
+Para que a aplicação do Jenkins funcione corretamente é necessário liberar as seguintes portas:
+
+80/TCP -> HTTP Connection
+50000/TCP -> Jenkins Connection
 
 ## Kubernets (MiniKube)
 
