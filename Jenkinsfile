@@ -17,8 +17,7 @@ node("docker") {
     }
     stage('Deployment'){
         echo "Staging Kubernetes Deployment"
-        sh 'export KUBECONFIG_SAVED=${KUBECONFIG}'
-        sh 'KUBECONFIG=$(pwd)/.kube'
+        sh 'kubectl --kubeconfig=$(pwd)/.kube/config'
         sh 'kubectl run ${name_project} --image ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} --port 80'
         sh 'KUBECONFIG=${KUBECONFIG_SAVED}'
         echo "Finishing Kubernetes Deployment"
