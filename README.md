@@ -65,7 +65,7 @@ $ mix talk
 ```
 ## Amazon EC2
 
-Neste projeto optamos por utilizar o AWS Cloud, pela praticidade que temos envolvendo todas as plataformas que utilizamos neste projeto, tendo uma fácil configuração entre o GitHub, Docker, Jenkins e Kubernetes, dessa forma agilizando nosso processo de configuração da Cloud e assim criando um ambiente seguro, prático e integro para a utilização deste projeto.
+Neste projeto optamos por utilizar a AWS Cloud, pela praticidade que temos envolvendo todas as plataformas que utilizamos neste projeto, tendo uma fácil configuração entre o GitHub, Docker, Jenkins e Kubernetes, dessa forma agilizando nosso processo de configuração da Cloud e assim criando um ambiente seguro, prático e integro para a utilização deste projeto.
 
 Iremos focar em uma infraestrutura pequena, de baixo custo e que atenda todas as especificação deste projeto, sendo assim:
 
@@ -81,7 +81,7 @@ Recomendo que utilize também o Google Cloud, pela fácilidade de sua configura�
 
 O GitHub foi selecionado para ser o nosso gerenciador de versão, pois é uma das ferramentas mais completas do mercado hoje em dia, tendo uma vasta gama de utilizadores, sendo apoiado por uma das maiores empresas de tecnologia atuais, a Microsoft. 
 
-Com todo o tempo de vida do GitHub, ele pode ser muito bem trabalhado, desenvolvido e criado formas de se gerenciar suas versões da aplicação de forma mais prática e fácil, dessa forma facilitando quando se precisa dar um RollBack, ou até mesmo verificar certos tipos de modificações feitas apartir com o tempo.
+Com todo o tempo de vida do GitHub, ele pode ser muito bem trabalhado, desenvolvido e criado formas de se gerenciar suas versões da aplicação de forma mais prática e fácil, dessa forma facilitando quando se precisa dar um RollBack, ou até mesmo verificar certos tipos de modificações feitas apartir do tempo.
 
 Com uma boa gestão de versionamento, pode fazer com que toda a equipe saia ganhando, e agilizando o processo de desenvolvimento até o momento do Deployment.
 
@@ -117,7 +117,7 @@ name_project: Parâmetro String -> Nome do repositório criado no DockerHub, par
 environment: Parâmetro String -> Environment para Taggear sua imagem da maneira correta.
 repository_name: Parâmetro String -> Nome do hub-user que será enviado no DockerHub, provavelmente o mesmo do docker_login.
 
-É necessário também configurar um Jenkins Slave, contendo a Label "docker", que é o que o nosso Pipelina utiliza para selecionar em qual node será utilizado para a geração da Build. Nesta configuração eu geralmente opto em utilizar o plugin do Jenkins "Amazon EC2 (Plugin)", pela praticidade de se utilizar esse plugin e por poder configurar facilmente uma máquina EC2, quando necessária, e desativa-lá quando não for utiliza-lá novamente. Outras formas de fazermos esse processo é utilizando o Kubernetes para automatizar a criação de Slaves do Jenkins, uma prática muito utilizada em ambientes de produção e que a maioria das maiores empresas utilizam hoje em dia, porém para este passo-a-passo iremos utilizar o plugin relatado acima graças a sua praticidade de configurar. Segue um link de configuração do plugin "Amazon EC2 (Plugin)":
+É necessário também configurar um Jenkins Slave, contendo a Label "docker", que é o que o nosso Pipeline utiliza para selecionar em qual node será utilizado para a geração da Build. Nesta configuração, demonstração, eu geralmente opto em utilizar o plugin do Jenkins "Amazon EC2 (Plugin)", pela praticidade de se utilizar esse plugin e por poder configurar facilmente uma máquina EC2, quando necessária, e desativa-lá quando não for utiliza-lá novamente. Outras formas de fazermos esse processo é utilizando o Kubernetes para automatizar a criação de Slaves do Jenkins, uma prática muito utilizada em ambientes de produção e que a maioria das maiores empresas utilizam hoje em dia, porém para este passo-a-passo iremos utilizar o plugin relatado acima graças a sua praticidade de configurar e o seu custo reduzido. Segue um link de configuração do plugin "Amazon EC2 (Plugin)":
 
 [Amazon EC2 Plugin](https://plugins.jenkins.io/ec2)
 
