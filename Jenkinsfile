@@ -1,6 +1,11 @@
 node("docker") {
     checkout scm
-
+    stage('Teste') {
+        echo "Starting Automatic Test"
+        sh 'sudo docker build -t test:latest .'
+        sh 'sudo docker run -ti --entrypoint="" -e "MIX_ENV=test" test:latest mix test'
+        echo "Finishing Automatic Test"
+    }
     stage('Build') {
         echo "Starting Build"
         sh 'sudo docker build -t ${name_project}:latest-${environment} .'
@@ -11,11 +16,6 @@ node("docker") {
         sh 'sudo docker push ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
         echo "Finishing Build"
     }
-    stage('Teste') {
-        echo "Starting Automatic Test"
-        sh 'sudo docker run ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} -e "MIX_ENV=test" mix test'
-        echo "Finishing Automatic Test"
-    }
     stage('Deployment'){
         echo "Staging Kubernetes Deployment"
         sh 'cp -R ./.kube/ ~/.kube/'
@@ -25,6 +25,7 @@ node("docker") {
     stage('Clean') {
         echo "Starting Cleaning"
         sh 'docker rmi -f ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
+        sh 'docker rmi -f test:latest'
         echo "Finishing Cleaning"
     }
 }

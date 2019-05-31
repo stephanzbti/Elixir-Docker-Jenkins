@@ -1,11 +1,14 @@
 # Elixir-Docker-Jenkins
 
-
 ## A aplicação
 
 Está aplicação é uma aplicação em Elixir, criada para a demonstração da utilização de Integração Contínua com Jenkins e Docker. Com ela você pode analisar e verificar como é feito uma integração contínua utilizando Docker, o Build sendo gerado apartir do Jenkins e o Deploy da aplicação sendo feito via MiniKube.
 
 Nosso objetivo não é demonstrar como a aplicação funciona internamente, sendo apenas com o objetivo de demonstrar como o Build é feito com a aplicação.
+
+Exemplo da aplicação online:
+
+[Exemplo Aplicação](http://54.242.185.255:31873)
 
 Abaixo descrevo os Endpoints que estão presentes nesta aplicação.
 
