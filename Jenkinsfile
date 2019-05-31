@@ -3,7 +3,7 @@ node("docker") {
     stage('Teste') {
         echo "Starting Automatic Test"
         sh 'sudo docker build -t test:latest .'
-        sh 'sudo docker run -ti --entrypoint="" -e "MIX_ENV=test" test:latest mix test'
+        sh 'sudo docker run -i --entrypoint="" -e "MIX_ENV=test" test:latest mix test'
         echo "Finishing Automatic Test"
     }
     stage('Build') {
