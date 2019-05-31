@@ -12,18 +12,19 @@ node("docker") {
         echo "Finishing Build"
     }
     stage('Teste') {
-        echo "Starting Login Repository"
-        echo "Finishing Login Repository"
+        echo "Starting Automatic Test"
+        sh 'sudo docker run ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} -e "MIX_ENV=test" mix test'
+        echo "Finishing Automatic Test"
     }
     stage('Deployment'){
         echo "Staging Kubernetes Deployment"
         sh 'cp -R ./.kube/ ~/.kube/'
-        sh 'kubectl --record deployment.apps/${name_project} set image deployment.v1.apps/elixir-basic-api elixir-basic-api=${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
+        sh 'kubectl --record deployment.apps/${name_project} set image deployment.v1.apps/${name_project} ${name_project}=${repository_name}/${name_project}:${BUILD_NUMBER}-${environment} '
         echo "Finishing Kubernetes Deployment"
     }
     stage('Clean') {
-        echo "Starting Automatic Test"
-        
-        echo "Finishing Automatic Test"
+        echo "Starting Cleaning"
+        sh 'docker rmi -f ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
+        echo "Finishing Cleaning"
     }
 }
