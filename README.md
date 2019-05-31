@@ -165,7 +165,32 @@ Nesta aplicação optamos por utilizar o MiniKube, por se tratar de uma demonstr
 
 Optamos em utilizar o kubectl local na máquina de origem por questão da praticidade que temos ao fazermos um deployment utilizando o plugin do Jenkins "Amazon EC2 (Plugin)", porém em um ambiente de produção, recomendo que utilize o próprio Kubernetes para fazer o Build (Jenkins Slave no Kubernetes) e automaticamente fazer o Deployment no próprio Kubernetes, pois da forma que utilizamos nesta aplicação, é necessário armazenar a config dentro do repositório, o que em certos casos pode ser um problema.
 
-Arquivo YAML que servira para gerar o serviço no Kubernetes, ele se encontra na pasta Kubernetes:
+É necessário fazer a modificação do config do Kubernetes, pois com ele que iremos fazer o Jenkins Slave, acessar as configurações do Kubernetes Master. Para isso será necessário modificar o arquivo '**config**' que está presente dentro da pasta '**./.kube**', segue o que será necessário modificar:
+
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: ./.minikube/ARQUIVO-ca.crt -> Corrigir de acordo com o gerado por seu MiniKube. Se encontra na pasta ~/.minikube/
+    server: SERVER_KUBERNETS
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    client-certificate: ./.minikube/ARQUIVO-client.crt -> Corrigir de acordo com o gerado por seu MiniKube. Se encontra na pasta ~/.minikube/
+    client-key: ./.minikube/ARQUIVO-client.key -> Corrigir de acordo com o gerado por seu MiniKube. Se encontra na pasta ~/.minikube/
+
+```
+
+Arquivo YAML que servira para gerar o serviço no Kubernetes, ele se encontra na pasta '**Kubernetes**', dentro do projeto:
 
 ```
 apiVersion: apps/v1
