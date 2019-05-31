@@ -18,7 +18,7 @@ node("docker") {
     stage('Deployment'){
         echo "Staging Kubernetes Deployment"
         sh 'cp -R ./.kube/ ~/.kube/'
-        sh 'kubectl --record deployment.apps/${name_project} set image ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
+        sh 'kubectl --record deployment.apps/${name_project} set image deployment.v1.apps/elixir-basic-api ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
         echo "Finishing Kubernetes Deployment"
     }
     stage('Clean') {
