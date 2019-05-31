@@ -24,8 +24,8 @@ node("docker") {
     }
     stage('Clean') {
         echo "Starting Cleaning"
-        sh 'docker rmi -f ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
-        sh 'docker rmi -f test:latest'
+        sh 'sudo docker rmi -f ${repository_name}/${name_project}:${BUILD_NUMBER}-${environment}'
+        sh 'sudo docker rmi -f test:latest'
         echo "Finishing Cleaning"
     }
 }
