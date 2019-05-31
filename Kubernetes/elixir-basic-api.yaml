@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elixir-basic-api
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: elixir-basic-api
+  template:
+    metadata:
+      labels:
+        app: elixir-basic-api
+    spec:
+      containers:
+      - image: stephanzbti/elixir-basic-api:latest-development
+        imagePullPolicy: Always
+        name: elixir-basic-api
+        ports:
+            - containerPort: 8080
