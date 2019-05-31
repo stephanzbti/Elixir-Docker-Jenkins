@@ -19,8 +19,8 @@ spec:
         name: elixir-basic-api
         env:
           - name: PORT
-            value: 80
+            value: '80'
           - name: MIX_ENV
-            value: prod
+            value: "prod"
         ports:
             - containerPort: 80
