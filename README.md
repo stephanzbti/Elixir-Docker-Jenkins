@@ -159,3 +159,10 @@ O Kubernets foi selecionado como ferramenta de Deployment para esta aplicação,
 Nesta aplicação optamos por utilizar o MiniKube, por se tratar de uma demonstração e não de fato uma aplicação em produção. Para se utilizar em uma aplicação em produção, recomendo que você utilize o Kubernets de forma completa, sendo preferêncialmente instalado pelo KubeAdm, dessa forma já configurando seu Kubernets com algumas pendências já resolvidas. Recomendo que leia o site do Kubernets para maiores informações:
 
 [Kubernets](https://kubernetes.io/pt/)
+
+### Firewall
+
+Para que a aplicação Deployada no MiniKube funcione, é necessário liberar as seguintes portas:
+
+8443/TCP -> HTTP Connection Kubernetes
+80/TCP -> HTTP Connection
