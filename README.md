@@ -160,6 +160,75 @@ Nesta aplicação optamos por utilizar o MiniKube, por se tratar de uma demonstr
 
 [Kubernets](https://kubernetes.io/pt/)
 
+Optamos em utilizar o kubectl local na máquina de origem por questão da praticidade que temos ao fazermos um deployment utilizando o plugin do Jenkins "Amazon EC2 (Plugin)", porém em um ambiente de produção, recomendo que utilize o próprio Kubernetes para fazer o Build (Jenkins Slave no Kubernetes) e automaticamente fazer o Deployment no próprio Kubernetes, pois da forma que utilizamos nesta aplicação, é necessário armazenar a config dentro do repositório, o que em certos casos pode ser um problema.
+
+Arquivo YAML que servira para gerar o serviço no Kubernetes, ele se encontra na pasta Kubernetes:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elixir-basic-api
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: elixir-basic-api
+  template:
+    metadata:
+      labels:
+        app: elixir-basic-api
+    spec:
+      containers:
+      - image: stephanzbti/elixir-basic-api:latest-production
+        imagePullPolicy: Always
+        name: elixir-basic-api
+        env:
+          - name: PORT
+            value: 80
+          - name: MIX_ENV
+            value: prod
+        ports:
+            - containerPort: 80
+```
+
+É necessário iniciar o serviço acima, com o comando dentro da pasta Kubernetes deste projeto:
+
+```
+kubectl apply -f elixir-basic-api.yaml
+```
+
+Para que sua aplicação fique exposta para a rede, é necessário executar o seguinte comando em seu serviço Kubernetes:
+
+```
+kubectl expose deployment/elixir-basic-api --type=NodePort
+```
+
+Como estamos usando o MiniKube, seria necessário instalar o LoadBalancer Integress para que ele possa gerenciar as rotas para cada aplicação via DNS, mas para adiantar o processo podemos analisar a porta em que a aplicação foi exposta. Será necessário digitar o seguinte comando:
+
+```
+kubectl get services
+```
+
+Será exibido uma tela parecida com esta:
+
+```
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+elixir-basic-api   NodePort    10.100.128.159   <none>        80:31873/TCP   5m6s
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP        178m
+```
+
+Neste caso a porta que está dispoível para o projeto, seria 31873/TCP, após libera-lá no Firewall, você já teria acesso a aplicação via navegador/PostMan sem problema.
+
+Caso deseje instalar o LoadBalancer Integress, segue o passo-a-passo abaixo:
+
+[Load Balancer Ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
+
+Lembrando que ao se fazer a configuração inicial do serviço, desde que ela seja bem feita, você não precisará mais da manutenção nela, pois o Build irá subir automaticamente, após o Push do Desenvolvedor.
+
+Obs: Este passo-a-passo, não se aplica a uma aplicação que irá para produção. Fizemos todas essa configuração para criarmos um ambiente facilmente utilizando o MiniKube, e dessa forma podemos criar uma pequena aplicação fácilmente, porém com alguns recursos do Kubernetes reduzidos. Caso deseje fazer uma aplicação para o ambiente de produção, será necessário criar um Kubernetes Master, e seus Nodes! Recomendo que utilize o TerraForm e o Ansible para geração automática, assim que possível irei disponibilizar o TerraForm e o arquivo de configuração do Ansible para a geração completa da infraestructure-as-a-code.
+
 ### Firewall
 
 Para que a aplicação Deployada no MiniKube funcione, é necessário liberar as seguintes portas:
