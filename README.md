@@ -99,6 +99,10 @@ Instalação do Docker:
 
 O DockerHub foi selecionado como Repositorio de Imagens por ser um repositório público, de ampla utilização, e de fácil configuração, dessa forma seus projetos podem ser suportados pela comunidade, além de não precisar pagar, economizando e armazenando suas imagens, para utilizar sempre que for necessário.
 
+DockerHub de exemplo com alguns container deployados:
+
+[DockerHub StephanzbTI](https://hub.docker.com/r/stephanzbti/elixir-basic-api)
+
 ## Jenkins
 
 O Jenkins foi selecionado para a geração da imagem na Integração Contínua pela praticidade de se utilizar essa ferramenta com outras ferramentas, como por exemplo o Git, Docker, Kubernets. Com essa ferramenta podemos gerar Builds automatizadas, o que faz com que todo o ambiente de desenvolvimento e produção, flua de uma forma mais rápida, segura e de difícil falhas, sendo possível descrever Pipelines novas para cada aplicação que se deseja automatizar a Build, dessa forma padronizando todo o processo e ganhando em velocidade de entregas para o Cliente e para os desenvolvedores.
@@ -214,9 +218,9 @@ spec:
         name: elixir-basic-api
         env:
           - name: PORT
-            value: 80
+            value: 80 -> Porta que irá executar a aplicação
           - name: MIX_ENV
-            value: prod
+            value: prod -> Environment da aplicação
         ports:
             - containerPort: 80
 ```
